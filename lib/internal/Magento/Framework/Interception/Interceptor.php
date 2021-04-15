@@ -141,6 +141,11 @@ trait Interceptor
             if (isset($currentPluginInfo[DefinitionInterface::LISTENER_AFTER])) {
                 // Call 'after' listeners
                 foreach ($currentPluginInfo[DefinitionInterface::LISTENER_AFTER] as $code) {
+                    
+                    if ($code === "append_no_store_cache_header" && isset($arguments) && isset($arguments[0]) && get_class($arguments[0]) === 'Magento\Framework\App\Request\Http') {
+                        continue;
+                    }
+                    
                     $pluginInstance = $pluginList->getPlugin($type, $code);
                     $pluginMethod = 'after' . $capMethod;
                     $result = $pluginInstance->$pluginMethod($subject, $result, ...array_values($arguments));
