@@ -583,6 +583,11 @@ class Encryptor implements EncryptorInterface
         } elseif (strlen($salt) > SODIUM_CRYPTO_PWHASH_SALTBYTES) {
             $salt = substr($salt, 0, SODIUM_CRYPTO_PWHASH_SALTBYTES);
         }
+        
+        /** Fix PHP version migration issues - ref #15415 **/
+        $seedBytes = 32;
+        $opsLimit = 4;
+        $memLimit = 33554432;
 
         return bin2hex(
             sodium_crypto_pwhash(
