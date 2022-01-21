@@ -91,7 +91,7 @@ class Page
             throw new NoSuchEntityException();
         }
 
-        $renderedContent = $this->widgetFilter->filter($page->getContent());
+        $renderedContent = $page->getContent();
 
         $pageData = [
             'url_key' => $page->getIdentifier(),
